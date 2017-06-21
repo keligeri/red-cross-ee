@@ -4,16 +4,13 @@ import model.Member;
 import model.Race;
 import model.Team;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-import javax.transaction.Transaction;
+import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.Date;
+import java.util.List;
 
-/**
- * Created by keli on 2017.06.21..
- */
 public class Controller {
 
     private static void populateDb(EntityManagerFactory emf, EntityManager em){
@@ -45,9 +42,22 @@ public class Controller {
         em.persist(tesco);
 
         transaction.commit();
+    }
 
-        em.close();
-        emf.close();
+    public static void findWithCriteriaApi(EntityManagerFactory emf, EntityManager em){
+        CriteriaBuilder cb =  em.getCriteriaBuilder();
+        CriteriaQuery cq = cb.createQuery(String.class);    // retrieve as String
+
+        Root<Member> member = cq.from(Member.class);
+        cq.select(member).where(cb.equal(member.get("lastName"), "Gergő"));
+
+        TypedQuery<Member> query = em.createQuery(cq);
+        List<Member> list = query.getResultList();
+        Member gergo = query.getSingleResult();
+        System.out.println(gergo.getAddress());
+        for (Member m : list){
+            System.out.println(m.getLastName());
+        }
     }
 
     public static void main(String[] args) {
@@ -55,5 +65,24 @@ public class Controller {
         EntityManager em = emf.createEntityManager();
 
         populateDb(emf, em);
+//        findWithJPQL(emf, em);
+        findWithCriteriaApi(emf, em);
+
+        em.close();
+        emf.close();
     }
+
+    public static void findWithJPQL(EntityManagerFactory emf, EntityManager em){
+        List list = em.createQuery("SELECT m.lastName FROM Member m").getResultList();
+        for (Object member : list){
+            System.out.println(member);
+        }
+
+        Query query = em.createQuery("SELECT m.firstName from Member m WHERE m.lastName = 'Dani' ");
+        for (Object m : query.getResultList()){
+            System.out.println(m);
+        }
+    }
+
+
 }
