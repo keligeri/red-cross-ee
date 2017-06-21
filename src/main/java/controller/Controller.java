@@ -24,7 +24,10 @@ public class Controller {
         Team miskolciak = new Team("miskolci csapat", secondRace);
         Team tesco = new Team("gazdaságos", secondRace);
 
-        Member gergo = new Member("Kelemen", "Gergő", "Nekeresdi utca 26");
+        Member gergo = new Member("Kelemen", "Gergő", "Nekeresdi utca 26", zegiek);
+        Member dani = new Member("Kelemen", "Dani", "Nekeresdi utca 26", miskolciak);
+        Member peti = new Member("Kelemen", "Péter", "Nekeresdi utca 26", tesco);
+        Member pista = new Member("Kelemen", "Pista", "Nekeresdi utca 26", zegiek);
 
         EntityTransaction transaction = em.getTransaction();
 
@@ -33,6 +36,9 @@ public class Controller {
         em.persist(secondRace);
 
         em.persist(gergo);
+        em.persist(dani);
+        em.persist(peti);
+        em.persist(pista);
 
         em.persist(zegiek);
         em.persist(miskolciak);

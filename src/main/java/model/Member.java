@@ -18,12 +18,24 @@ public class Member {
     @Column(name = "address")
     private String address;
 
+    @ManyToOne
+    private Team team;
+
     public Member(){}
 
-    public Member(String firstName, String lastName, String address) {
+    public Member(String firstName, String lastName, String address, Team team) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
+        this.team= team;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     public long getId() {

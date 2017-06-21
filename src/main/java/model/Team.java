@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Team {
@@ -15,11 +16,30 @@ public class Team {
     @Column(name = "team_name")
     private String teamName;
 
+    @OneToMany(mappedBy = "team")
+    private List<Member> members;
+
     public Team(){}
 
     public Team(String name, Race race) {
         this.teamName = name;
         this.race = race;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public List<Member> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<Member> members) {
+        this.members = members;
     }
 
     public long getId() {
