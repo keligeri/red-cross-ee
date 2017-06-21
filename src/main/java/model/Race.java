@@ -1,7 +1,14 @@
 package model;
 
-/**
- * Created by keli on 2017.06.21..
- */
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Race {
+
+    @Id
+    @GeneratedValue
+    private long id;
+
 }
