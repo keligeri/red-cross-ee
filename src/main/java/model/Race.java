@@ -1,37 +1,58 @@
 package model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Race {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "team_name")
-    private String teamName;
+//    @Column(name = "team_name")
+//    private String teamName;
 
-    public Race(String teamName) {
-        this.teamName = teamName;
+    @Column(name = "race_date")
+    private Date raceDate;
+
+    @Column(name = "location")
+    private String location;
+
+    @OneToMany(mappedBy = "race")
+    private Set<Team> teamsList = new HashSet<Team>();
+
+    public Race(){}
+
+    public Race(Date raceDate, String location) {
+        this.raceDate = raceDate;
+        this.location = location;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public long getId() {
         return id;
     }
 
+    public Date getRaceDate() {
+        return raceDate;
+    }
+
+    public void setRaceDate(Date raceDate) {
+        this.raceDate = raceDate;
+    }
+
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getTeamName() {
-        return teamName;
-    }
-
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
     }
 }

@@ -1,12 +1,14 @@
 package controller;
 
 import model.Race;
+import model.Team;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.transaction.Transaction;
+import java.util.Date;
 
 /**
  * Created by keli on 2017.06.21..
@@ -14,11 +16,23 @@ import javax.transaction.Transaction;
 public class Controller {
 
     private static void populateDb(EntityManagerFactory emf, EntityManager em){
-        Race firstRace = new Race("csapaat neve");
+        Race firstRace = new Race(new Date(), "Zalaegerszeg");
+        Race secondRace = new Race(new Date(), "Miskolc");
+
+        Team zegiek = new Team("Zegi puhányok", firstRace);
+        Team miskolciak = new Team("miskolci csapat", secondRace);
+        Team tesco = new Team("gazdaságos", secondRace);
+
         EntityTransaction transaction = em.getTransaction();
 
         transaction.begin();
         em.persist(firstRace);
+        em.persist(secondRace);
+
+        em.persist(zegiek);
+        em.persist(miskolciak);
+        em.persist(tesco);
+
         transaction.commit();
 
         em.close();
@@ -30,6 +44,5 @@ public class Controller {
         EntityManager em = emf.createEntityManager();
 
         populateDb(emf, em);
-
     }
 }
