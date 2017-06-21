@@ -15,7 +15,7 @@ public class Team {
     @Column(name = "team_name")
     private String teamName;
 
-    public Team(){};
+    public Team(){}
 
     public Team(String name, Race race) {
         this.teamName = name;

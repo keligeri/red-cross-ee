@@ -1,5 +1,6 @@
 package controller;
 
+import model.Member;
 import model.Race;
 import model.Team;
 
@@ -23,11 +24,15 @@ public class Controller {
         Team miskolciak = new Team("miskolci csapat", secondRace);
         Team tesco = new Team("gazdaságos", secondRace);
 
+        Member gergo = new Member("Kelemen", "Gergő", "Nekeresdi utca 26");
+
         EntityTransaction transaction = em.getTransaction();
 
         transaction.begin();
         em.persist(firstRace);
         em.persist(secondRace);
+
+        em.persist(gergo);
 
         em.persist(zegiek);
         em.persist(miskolciak);
